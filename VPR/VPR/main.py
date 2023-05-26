@@ -16,8 +16,8 @@ from datasets.train_dataset import TrainDataset
 
 class LightningModel(pl.LightningModule):
     def __init__(self, val_dataset, test_dataset, avgpool, avgpool_param = {}, 
-                    proxy_head = None, proxy_bank = None, descriptors_dim=512, /
-                    num_preds_to_save=0, save_only_wrong_preds=True, /
+                    proxy_head = None, proxy_bank = None, descriptors_dim=512, 
+                    num_preds_to_save=0, save_only_wrong_preds=True, 
                     self_supervised_learning = False):
         super().__init__()
         self.val_dataset = val_dataset
