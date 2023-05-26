@@ -159,7 +159,7 @@ def get_datasets_and_dataloaders(args):
     ])
 
     if  args.self_supervised_learning:
-        train_dataset_with_embeddings = TrainDataset(
+        train_dataset = TrainDataset(
             dataset_folder=args.train_path,
             img_per_place=args.img_per_place,
             min_img_per_place=args.min_img_per_place,
@@ -177,7 +177,7 @@ def get_datasets_and_dataloaders(args):
     val_dataset = TestDataset(dataset_folder=args.val_path)
     test_dataset = TestDataset(dataset_folder=args.test_path)
     if  args.self_supervised_learning:
-        train_loader = DataLoader(dataset=train_dataset_with_embeddings, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
+        train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
     else:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
     val_loader = DataLoader(dataset=val_dataset, batch_size=args.batch_size, num_workers=4, shuffle=False)
