@@ -16,6 +16,16 @@ import visualizations
 # Compute R@1, R@5, R@10, R@20
 RECALL_VALUES = [1, 5, 10, 20]
 
+
+
+class ContrastiveTransformation:
+    def __init__(self, customized_transforms, n_views=2):
+        self.customized_transforms = customized_transforms
+        self.n_views = n_views
+
+    def __call__(self, x):
+        return [self.customized_transforms(x) for i in range(self.n_views)]
+
 class GeM(nn.Module):
     def __init__(self, p=3, eps=1e-6):
         super(GeM, self).__init__()
