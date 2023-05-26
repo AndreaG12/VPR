@@ -45,6 +45,10 @@ def parse_arguments():
     parser.add_argument("--checkpoint_path", type=str, default="./LOGS/lightning_logs/version_0/checkpoints/*.ckpt",
                         help="path for loading pytorch lightning checkpoints")
 
+    parser.add_argument("--self_supervised_learning", default = False, 
+                        help = "apply a customized augemtation to images in order to perform constrative loss and self-supervised learning")
+
+
     args = parser.parse_args()
     return args
 
