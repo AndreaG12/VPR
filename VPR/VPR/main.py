@@ -16,7 +16,9 @@ from datasets.train_dataset import TrainDataset
 
 class LightningModel(pl.LightningModule):
     def __init__(self, val_dataset, test_dataset, avgpool, avgpool_param = {}, 
-                    proxy_head = None, proxy_bank = None, descriptors_dim=512, num_preds_to_save=0, save_only_wrong_preds=True):
+                    proxy_head = None, proxy_bank = None, descriptors_dim=512, /
+                    num_preds_to_save=0, save_only_wrong_preds=True, /
+                    self_supervised_learning = False):
         super().__init__()
         self.val_dataset = val_dataset
         self.test_dataset = test_dataset
@@ -39,8 +41,13 @@ class LightningModel(pl.LightningModule):
         # self.miner_fn = miners.MultiSimilarityMiner(epsilon=0.1, distance=CosineSimilarity())
         # Set loss_function
         # self.loss_fn = losses.MultiSimilarityLoss(alpha=2, beta=50, base=0.0, distance=CosineSimilarity())
-        self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
-
+        if not self_supervised_learning:
+            self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
+        else:
+            self.loss_fn = losses.VICRegLoss(invariance_lambda=25, 
+                variance_mu=25, 
+                covariance_v=1, 
+                eps=1e-4)
     def forward(self, images):
         descriptors = self.model(images)
         return descriptors
@@ -57,6 +64,10 @@ class LightningModel(pl.LightningModule):
         # loss = self.loss_fn(descriptors, labels, miner_output)
         loss = self.loss_fn(descriptors, labels)
         return loss
+    
+    def self_supervised_loss(self, descriptors, ref_descriptors):
+        loss = self.loss_fn(descriptors, ref_descriptors)
+
 
     # This is the training step that's executed at each iteration
     def training_step(self, batch, batch_idx):
@@ -66,8 +77,12 @@ class LightningModel(pl.LightningModule):
         labels = labels.view(num_places * num_images_per_place)
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
-        loss = self.loss_function(descriptors, labels)  # Call the loss_function we defined above
-
+        if  args.self_supervised_learning:
+            descriptors = descriptors[0::2]
+            ref_descriptors = descriptors[1::2]
+            loss = self.self_supervised_loss(descriptors, ref_descriptors) #embeddings from the augmented images 
+        else: 
+            loss = self.loss_function(descriptors, labels)  # Call the loss_function we defined above
         if args.enable_gpm:
             # descriptors = descriptors.cpu() #tensore privo di gradient
             compressed_descriptors = self.phead(descriptors)
@@ -130,15 +145,41 @@ def get_datasets_and_dataloaders(args):
         tfm.ToTensor(),
         tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
-    train_dataset = TrainDataset(
-        dataset_folder=args.train_path,
-        img_per_place=args.img_per_place,
-        min_img_per_place=args.min_img_per_place,
-        transform=train_transform
-    )
+    customized_transform = tfm.Compose([
+        tfm.RandomHorizontalFlip(),
+        tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
+                                    contrast = 0.5, 
+                                    saturation = 0.5,
+                                    hue = 0.1)], p = 0.8) ,
+        tfm.RandomGrayscale(),
+        tfm.RandomPerspective(distortion_scale = 0.2, 
+                                  p = 0.25), 
+        tfm.ToTensor(),
+        tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+
+    if  args.self_supervised_learning:
+        train_dataset_with_embeddings = TrainDataset(
+            dataset_folder=args.train_path,
+            img_per_place=args.img_per_place,
+            min_img_per_place=args.min_img_per_place,
+            transform = utils.Contrastivetransformation(customized_transform, n_views = 2)
+        )
+    else:
+        train_dataset = TrainDataset(
+            dataset_folder=args.train_path,
+            img_per_place=args.img_per_place,
+            min_img_per_place=args.min_img_per_place,
+            transform=train_transform
+        )
+        
+    
     val_dataset = TestDataset(dataset_folder=args.val_path)
     test_dataset = TestDataset(dataset_folder=args.test_path)
-    train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
+    if  args.self_supervised_learning:
+        train_loader = DataLoader(dataset=train_dataset_with_embeddings, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
+    else:
+        train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
     val_loader = DataLoader(dataset=val_dataset, batch_size=args.batch_size, num_workers=4, shuffle=False)
     test_loader = DataLoader(dataset=test_dataset, batch_size=args.batch_size, num_workers=4, shuffle=False)
     return train_dataset, val_dataset, test_dataset, train_loader, val_loader, test_loader
