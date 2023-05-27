@@ -63,7 +63,7 @@ class TrainDataset(Dataset):
         args = myparser.parse_arguments()
         
         if args.self_supervised_learning:
-            images = Image.open(chosen_paths).convert('RGB')
+            images = Image.open(chosen_paths[0]).convert('RGB')
             image = self.transform(img)
             print(image), print(index)
             return image, torch.tensor(index)   
