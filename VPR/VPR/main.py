@@ -9,7 +9,7 @@ from torch.utils.data.dataloader import DataLoader
 from pytorch_lightning.callbacks import ModelCheckpoint
 
 import utils
-import parser
+import myparser
 from datasets.test_dataset import TestDataset
 from datasets.train_dataset import TrainDataset
 
@@ -41,7 +41,7 @@ class LightningModel(pl.LightningModule):
         # self.miner_fn = miners.MultiSimilarityMiner(epsilon=0.1, distance=CosineSimilarity())
         # Set loss_function
         # self.loss_fn = losses.MultiSimilarityLoss(alpha=2, beta=50, base=0.0, distance=CosineSimilarity())
-        if not self_supervised_learning:
+        if not args.self_supervised_learning:
             self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
         else:
             self.loss_fn = losses.VICRegLoss(invariance_lambda=25, 
@@ -186,7 +186,7 @@ def get_datasets_and_dataloaders(args):
 
 
 if __name__ == '__main__':
-    args = parser.parse_arguments()
+    args = myparser.parse_arguments()
 
     train_dataset, val_dataset, test_dataset, train_loader, val_loader, test_loader = get_datasets_and_dataloaders(args)
     kwargs = {"val_dataset": val_dataset, "test_dataset": test_dataset, "avgpool": args.pooling_layer}
