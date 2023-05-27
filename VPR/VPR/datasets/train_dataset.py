@@ -58,15 +58,18 @@ class TrainDataset(Dataset):
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
         print("number of chosen paths: ") 
         print(chosen_paths.shape, type(chosen_paths), chosen_paths, chosen_paths[0])
-        images = [Image.open(path).convert('RGB') for path in chosen_paths]
-        images = [self.transform(img) for img in images]
+        
         
         args = myparser.parse_arguments()
         
         if args.self_supervised_learning:
-            print(type(images[0])); print(len(images))
-            return images, torch.tensor(index)   
+            images = Image.open(path).convert('RGB')
+            image = self.transform(img)
+            print(image), print(index)
+            return image, torch.tensor(index)   
         else:
+            images = [Image.open(path).convert('RGB') for path in chosen_paths]
+            images = [self.transform(img) for img in images]
             return torch.stack(images), torch.tensor(index).repeat(self.img_per_place)
 
     def __len__(self):
