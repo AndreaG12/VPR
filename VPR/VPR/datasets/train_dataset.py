@@ -50,23 +50,21 @@ class TrainDataset(Dataset):
     
 
     def __getitem__(self, index):
-        print(index); 
+         
         place_id = self.places_ids[index]
-        print(place_id); print(type(place_id))
+        
         all_paths_from_place_id = self.dict_place_paths[place_id]
-        print(all_paths_from_place_id)
+        
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
-        print("number of chosen paths: ") 
-        print(chosen_paths.shape, type(chosen_paths), chosen_paths, chosen_paths[0])
         
         
         args = myparser.parse_arguments()
         
         if args.self_supervised_learning:
             image = Image.open(chosen_paths[0]).convert('RGB')
-            print(image, type(image))
+            
             img = self.transform(image)
-            print(img), print(index)
+            
             return img, torch.tensor(index)   
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
