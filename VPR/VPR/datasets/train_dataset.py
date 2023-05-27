@@ -65,7 +65,7 @@ class TrainDataset(Dataset):
         
         if args.self_supervised_learning:
             print(type(images[0])); print(len(images))
-            return torch.stack(images), torch.tensor(index).repeat(self.img_per_place)   
+            return images, torch.tensor(index)   
         else:
             return torch.stack(images), torch.tensor(index).repeat(self.img_per_place)
 
