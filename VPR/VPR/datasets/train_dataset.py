@@ -56,7 +56,8 @@ class TrainDataset(Dataset):
         all_paths_from_place_id = self.dict_place_paths[place_id]
         print(all_paths_from_place_id)
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
-        print(chosen_paths.size)
+        print("number of chosen paths: ") 
+        print(chosen_paths.shape, type(chosen_paths))
         images = [Image.open(path).convert('RGB') for path in chosen_paths]
         images = [self.transform(img) for img in images]
         
