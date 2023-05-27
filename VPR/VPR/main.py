@@ -71,10 +71,17 @@ class LightningModel(pl.LightningModule):
 
     # This is the training step that's executed at each iteration
     def training_step(self, batch, batch_idx):
-        images, labels = batch
-        num_places, num_images_per_place, C, H, W = images.shape
-        images = images.view(num_places * num_images_per_place, C, H, W)
-        labels = labels.view(num_places * num_images_per_place)
+        if args.self_supervised_learning:
+            print(batch, type(batch))
+            images = batch
+            num_places, num_images_per_place, C, H, W = images.shape
+            images = images.view(num_places , C, H, W)
+        else:
+            images, labels = batch
+            num_places, num_images_per_place, C, H, W = images.shape
+            images = images.view(num_places * num_images_per_place, C, H, W)
+            labels = labels.view(num_places * num_images_per_place)
+        
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
         if  args.self_supervised_learning:
