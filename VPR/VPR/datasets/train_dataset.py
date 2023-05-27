@@ -49,7 +49,7 @@ class TrainDataset(Dataset):
 
     args = myparser.parse_arguments()
 
-    def __getitem__(self, index):
+    def __getitem__(self, index, args):
         print(index); print(type(index))
         place_id = self.places_ids[index[0]]
         print(place_id); print(type(place_id))
