@@ -47,17 +47,16 @@ class TrainDataset(Dataset):
         self.places_ids = sorted(list(self.dict_place_paths.keys()))
         self.total_num_images = sum([len(paths) for paths in self.dict_place_paths.values()])
 
-    
+    args = myparser.parse_arguments()
 
     def __getitem__(self, index):
         print(index); print(type(index))
-        place_id = self.places_ids[index]
+        place_id = self.places_ids[index[0]]
         print(place_id); print(type(place_id))
         all_paths_from_place_id = self.dict_place_paths[place_id]
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
         images = [Image.open(path).convert('RGB') for path in chosen_paths]
         images = [self.transform(img) for img in images]
-        args = myparser.parse_arguments()
         if args.self_supervised_learning:
             print(type(images)); print(images.size())
             return torch.stack(images), torch.tensor(index).repeat(self.img_per_place)   
