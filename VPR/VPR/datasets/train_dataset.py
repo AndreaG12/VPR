@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 import torchvision.transforms as tfm
 from collections import defaultdict
 
-import parser
+import myparser
 
 default_transform = tfm.Compose([
     tfm.ToTensor(),
@@ -50,7 +50,7 @@ class TrainDataset(Dataset):
     
 
     def __getitem__(self, index):
-        print(index); print(type(index))
+        print(index); 
         place_id = self.places_ids[index]
         print(place_id); print(type(place_id))
         all_paths_from_place_id = self.dict_place_paths[place_id]
@@ -59,7 +59,7 @@ class TrainDataset(Dataset):
         images = [Image.open(path).convert('RGB') for path in chosen_paths]
         images = [self.transform(img) for img in images]
         
-        args = parser.parse_arguments()
+        args = myparser.parse_arguments()
         
         if args.self_supervised_learning:
             print(type(images[0])); print(len(images))
