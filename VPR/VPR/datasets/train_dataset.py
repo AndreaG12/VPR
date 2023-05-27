@@ -51,7 +51,7 @@ class TrainDataset(Dataset):
 
     def __getitem__(self, index):
         print(index); print(type(index))
-        place_id = self.places_ids[index[0]]
+        place_id = self.places_ids[index]
         print(place_id); print(type(place_id))
         all_paths_from_place_id = self.dict_place_paths[place_id]
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
