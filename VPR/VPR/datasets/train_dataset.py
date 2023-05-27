@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 import torchvision.transforms as tfm
 from collections import defaultdict
 
-import myparser
+import parser
 
 default_transform = tfm.Compose([
     tfm.ToTensor(),
@@ -47,7 +47,7 @@ class TrainDataset(Dataset):
         self.places_ids = sorted(list(self.dict_place_paths.keys()))
         self.total_num_images = sum([len(paths) for paths in self.dict_place_paths.values()])
 
-    args = myparser.parse_arguments()
+    args = parser.parse_arguments()
 
     def __getitem__(self, index, args):
         print(index); print(type(index))
