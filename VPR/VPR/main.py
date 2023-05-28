@@ -73,8 +73,8 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning:
             print("LEzzo")
-            images, _ = batch
-            augImages = []
+            images, labels = batch
+            print(len(images), len(labels))
             num_places, C, H, W = images[0].shape
             print(num_places, C, H, W)
             images = images[0].view(num_places , C, H, W)
