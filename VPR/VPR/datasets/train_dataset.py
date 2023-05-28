@@ -63,8 +63,10 @@ class TrainDataset(Dataset):
         if args.self_supervised_learning:
             image = Image.open(chosen_paths[0]).convert('RGB')
             
-            img = self.transform(image[0])
+            img = self.transform(image)
             print(type(image), type(image[0]), type(img))
+            print(img); print(type(img))
+            
             
             return torch.stack(img), torch.tensor(index)   
         else:
