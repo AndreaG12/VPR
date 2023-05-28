@@ -77,7 +77,7 @@ class LightningModel(pl.LightningModule):
             augImages = []
             num_places, C, H, W = images[0].shape
             print(num_places, C, H, W)
-            images = images.view(num_places , C, H, W)
+            images = images[0].view(num_places , C, H, W)
             
         else:
             images, labels = batch
