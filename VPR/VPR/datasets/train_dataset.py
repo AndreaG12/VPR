@@ -67,7 +67,7 @@ class TrainDataset(Dataset):
             
             
             
-            return torch.stack(img[0]), torch.tensor(index)   
+            return img, torch.tensor(index)   
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
             images = [self.transform(img) for img in images]
