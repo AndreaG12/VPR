@@ -64,11 +64,9 @@ class TrainDataset(Dataset):
             image = Image.open(chosen_paths[0]).convert('RGB')
             
             img = self.transform(image)
-            print(type(img))
-            print("Lunghezza img: ", len(img))
-            print("lunghezza index:" , len(index))
             
-            return img, torch.tensor(index)   
+            
+            return img, torch.tensor(index).repeat(2)   #number of final augmented images
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
             images = [self.transform(img) for img in images]
