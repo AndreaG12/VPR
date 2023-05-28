@@ -64,7 +64,7 @@ class TrainDataset(Dataset):
             image = Image.open(chosen_paths[0]).convert('RGB')
             
             img = self.transform(image)
-            
+            print(len(img), type(img), img)
             
             return img, torch.tensor(index).repeat(2)   #number of final augmented images
         else:
