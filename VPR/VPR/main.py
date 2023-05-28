@@ -74,10 +74,11 @@ class LightningModel(pl.LightningModule):
         if args.self_supervised_learning:
             print("LEzzo")
             images, _ = batch
-            print(len(images), images[0].shape)
-            num_places, num_images_per_place, C, H, W = images[0].shape
-            print(num_places, num_images_per_place, C, H, W)
+            augImages = []
+            num_places, C, H, W = images[0].shape
+            print(num_places, C, H, W)
             images = images.view(num_places , C, H, W)
+            
         else:
             images, labels = batch
             num_places, num_images_per_place, C, H, W = images.shape
@@ -172,7 +173,7 @@ def get_datasets_and_dataloaders(args):
             dataset_folder=args.train_path,
             img_per_place=args.img_per_place,
             min_img_per_place=args.min_img_per_place,
-            transform = utils.ContrastiveTransformation(customized_transform, n_views = 1)
+            transform = utils.ContrastiveTransformation(customized_transform, n_views = 2)
         )
     else:
         train_dataset = TrainDataset(
