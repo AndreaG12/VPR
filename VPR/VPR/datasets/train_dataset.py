@@ -64,7 +64,7 @@ class TrainDataset(Dataset):
             image = Image.open(chosen_paths[0]).convert('RGB')
             
             img = self.transform(image)
-            print(type(image), type(image[0]), type(img))
+            print(type(image),  type(img))
             print(img); print(type(img))
             
             
