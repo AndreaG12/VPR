@@ -88,7 +88,7 @@ class LightningModel(pl.LightningModule):
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
         if  args.self_supervised_learning:
-            descriptors = descriptors[0::2]
+            descriptors = descriptors[::2]
             ref_descriptors = descriptors[1::2]
             loss = self.self_supervised_loss(descriptors, ref_descriptors) #embeddings from the augmented images 
         else: 
