@@ -65,7 +65,8 @@ class TrainDataset(Dataset):
             
             img = self.transform(image)
             
-            print(torch.stack((img[0], img[1]).shape))
+            print(len(torch.stack((img[0], img[1])))
+            print(torch.stack((img[0], img[1]))[0].shape))
             print(torch.tensor(index).repeat(2))
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
         else:
