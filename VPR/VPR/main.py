@@ -76,6 +76,7 @@ class LightningModel(pl.LightningModule):
             print("LEzzo")
             images, labels = batch
             print(images[0].shape,images[1].shape,  len(labels))
+            print(num_places, "num places")
             num_places, C, H, W = images[0].shape
             print(num_places, C, H, W)
             images = images[0].view(num_places , C, H, W)
@@ -91,6 +92,7 @@ class LightningModel(pl.LightningModule):
         if  args.self_supervised_learning:
             descriptors = descriptors[::2]
             ref_descriptors = descriptors[1::2]
+            print(len(descriptors), len(ref_descriptors))
             loss = self.self_supervised_loss(descriptors, ref_descriptors) #embeddings from the augmented images 
         else: 
             loss = self.loss_function(descriptors, labels)  # Call the loss_function we defined above
