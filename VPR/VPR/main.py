@@ -75,7 +75,8 @@ class LightningModel(pl.LightningModule):
             print()
             print("LEzzo")
             images, labels = batch
-            #print(images[0][0].shape,images[1].shape, labels)
+            print(images.size(), labels.size())
+            
             
             num_places, C, H, W = images[0].shape
             #print(num_places, C, H, W, type(num_places))
