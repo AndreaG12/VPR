@@ -81,7 +81,7 @@ class LightningModel(pl.LightningModule):
             #print(num_places, C, H, W, type(num_places))
            
             images = images[0].view(num_places , C, H, W)
-            labels = labels.view(num_places)
+            #labels = labels.view(num_places)
             print()
             print("AIA")
             print(images.size, labels.size)
