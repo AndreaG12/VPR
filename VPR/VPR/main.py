@@ -75,13 +75,16 @@ class LightningModel(pl.LightningModule):
             print()
             print("LEzzo")
             images, labels = batch
-            print(images[0][0].shape,images[1].shape, labels)
+            #print(images[0][0].shape,images[1].shape, labels)
             
             num_places, C, H, W = images[0].shape
-            print(num_places, C, H, W, type(num_places))
+            #print(num_places, C, H, W, type(num_places))
            
             images = images[0].view(num_places , C, H, W)
-            
+            labels = labels.view(num_places)
+            print()
+            print("AIA")
+            print(images.size, labels.size)
         else:
             images, labels = batch
             num_places, num_images_per_place, C, H, W = images.shape
