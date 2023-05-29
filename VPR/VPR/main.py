@@ -57,16 +57,17 @@ class LightningModel(pl.LightningModule):
         return optimizers
 
     #  The loss function call (this method will be called at each training iteration)
-    def loss_function(self, descriptors, labels):
+    #def loss_function(self, descriptors, labels):
         # Include a miner for loss'pair selection
         # miner_output = self.miner_fn(descriptors , labels)
         # Compute the loss using the loss function and the miner output instead of all possible batch pairs
         # loss = self.loss_fn(descriptors, labels, miner_output)
-        loss = self.loss_fn(descriptors, labels)
-        return loss
+     #   loss = self.loss_fn(descriptors, labels)
+      #  return loss
     
     def self_supervised_loss(self, descriptors, ref_descriptors):
         loss = self.loss_fn(descriptors, ref_descriptors)
+        return loss
 
 
     # This is the training step that's executed at each iteration
