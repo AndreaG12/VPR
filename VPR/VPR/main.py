@@ -92,8 +92,8 @@ class LightningModel(pl.LightningModule):
         descriptors = self(images)  # Here we are calling the method forward that we defined above
         print(descriptors.size(), type(descriptors))
         if  args.self_supervised_learning:
-            descriptors = descriptors[::2]
-            ref_descriptors = descriptors[1::2]
+            descriptors = descriptors[::2, :]
+            ref_descriptors = descriptors[1::2, :]
             print(len(descriptors), len(ref_descriptors))
             loss = self.self_supervised_loss(descriptors, ref_descriptors) #embeddings from the augmented images 
         else: 
