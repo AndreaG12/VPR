@@ -66,7 +66,7 @@ class LightningModel(pl.LightningModule):
       #  return loss
     
     def self_supervised_loss(self, descriptors, ref_descriptors):
-        loss = self.loss_fn(descriptors, ref_descriptors)
+        loss = self.loss_fn(descriptors, ref_emb =  ref_descriptors)
         return loss
 
 
