@@ -73,15 +73,9 @@ class LightningModel(pl.LightningModule):
     # This is the training step that's executed at each iteration
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning:
-            
             images, _ = batch
-            
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
-            #labels = labels.view(num_places * num_images_per_place)
-        
-            
-            
             
         else:
             images, labels = batch
@@ -168,8 +162,6 @@ def get_datasets_and_dataloaders(args):
                                     saturation = 0.5,
                                     hue = 0.1)], p = 0.8) ,
         tfm.RandomGrayscale(),
-        tfm.RandomPerspective(distortion_scale = 0.2, 
-                                  p = 0.25), 
         tfm.ToTensor(),
         tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
