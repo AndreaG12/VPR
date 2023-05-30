@@ -74,13 +74,13 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning:
             
-            images, labels = batch
-            print(images.size(), labels.size())
+            images, _ = batch
+            
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
-            labels = labels.view(num_places * num_images_per_place)
+            #labels = labels.view(num_places * num_images_per_place)
         
-            print(images.size(), labels.size())
+            
             
             
         else:
@@ -91,11 +91,11 @@ class LightningModel(pl.LightningModule):
         
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
-        print(descriptors.size(), type(descriptors))
+        
         if  args.self_supervised_learning:
             descriptorsOrig = descriptors[::2, :]
             ref_descriptors = descriptors[1::2, :]
-            print(len(descriptorsOrig), len(ref_descriptors))
+            
             loss = self.self_supervised_loss(descriptorsOrig, ref_descriptors) #embeddings from the augmented images 
         else: 
             loss = self.loss_function(descriptors, labels)  # Call the loss_function we defined above
