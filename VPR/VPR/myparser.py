@@ -46,7 +46,10 @@ def parse_arguments():
                         help="path for loading pytorch lightning checkpoints")
 
     parser.add_argument("--self_supervised_learning", default = False, 
-                        help = "apply a customized augemtation to images in order to perform constrative loss and self-supervised learning")
+                        help = "apply a customized augmentation to an image in order to obtain two augmentated ones ")
+    
+    parser.add_argument("--soft_supervised_learning", default = False, 
+                        help = "apply a customized augmentation to images paired in order of the label")
 
 
     args = parser.parse_args()
