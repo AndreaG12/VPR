@@ -80,6 +80,8 @@ class LightningModel(pl.LightningModule):
             
         else:
             images, labels = batch
+            
+            print(images.shape)
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
