@@ -50,6 +50,8 @@ class TrainDataset(Dataset):
     
 
     def __getitem__(self, index):
+        
+        args = myparser.parse_arguments()
          
         place_id = self.places_ids[index]
         
@@ -57,17 +59,23 @@ class TrainDataset(Dataset):
         
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
         
-        
-        args = myparser.parse_arguments()
+        images = [Image.open(path).convert('RGB') for path in chosen_paths]
+
         
         if args.self_supervised_learning:
-            image = Image.open(chosen_paths[0]).convert('RGB')
             
+            #image = Image.open(chosen_paths[0]).convert('RGB') 
             img = self.transform(image)
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
+        
+        if args.soft_supervised_learning:
+            #images= Image.open((chosen_paths[0], chosen_paths[1])).convert('RGB')
+            img = self.transform(image)
+            
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
             images = [self.transform(img) for img in images]
+            print(type(images[0]))
             return torch.stack(images), torch.tensor(index).repeat(self.img_per_place)
 
     def __len__(self):
