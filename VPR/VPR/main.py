@@ -41,13 +41,14 @@ class LightningModel(pl.LightningModule):
         # self.miner_fn = miners.MultiSimilarityMiner(epsilon=0.1, distance=CosineSimilarity())
         # Set loss_function
         # self.loss_fn = losses.MultiSimilarityLoss(alpha=2, beta=50, base=0.0, distance=CosineSimilarity())
-        if not args.self_supervised_learning:
-            self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
-        else:
+        
+        if args.self_supervised_learning || args.soft_supervised_learning:
             self.loss_fn = losses.VICRegLoss(invariance_lambda=25, 
                 variance_mu=25, 
                 covariance_v=1, 
                 eps=1e-4)
+        else:
+            self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
     def forward(self, images):
         descriptors = self.model(images)
         return descriptors
@@ -56,14 +57,14 @@ class LightningModel(pl.LightningModule):
         optimizers = torch.optim.SGD(self.parameters(), lr=0.001, weight_decay=0.001, momentum=0.9)
         return optimizers
 
-    #  The loss function call (this method will be called at each training iteration)
-    #def loss_function(self, descriptors, labels):
-        # Include a miner for loss'pair selection
-        # miner_output = self.miner_fn(descriptors , labels)
-        # Compute the loss using the loss function and the miner output instead of all possible batch pairs
-        # loss = self.loss_fn(descriptors, labels, miner_output)
-     #   loss = self.loss_fn(descriptors, labels)
-      #  return loss
+      The loss function call (this method will be called at each training iteration)
+    def loss_function(self, descriptors, labels):
+       # Include a miner for loss'pair selection
+         miner_output = self.miner_fn(descriptors , labels)
+          #Compute the loss using the loss function and the miner output instead of all possible batch pairs
+         loss = self.loss_fn(descriptors, labels, miner_output)
+        loss = self.loss_fn(descriptors, labels)
+        return loss
     
     def self_supervised_loss(self, descriptors, ref_descriptors):
         loss = self.loss_fn(descriptors, ref_emb =  ref_descriptors)
