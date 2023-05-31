@@ -71,7 +71,7 @@ class TrainDataset(Dataset):
         if args.soft_supervised_learning:
             #images= Image.open((chosen_paths[0], chosen_paths[1])).convert('RGB')
             images = [self.transform(img) for img in images]
-            return torch.stack(img), torch.tensor(index).repeat(2)
+            return torch.stack(images), torch.tensor(index).repeat(2)
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
             images = [self.transform(img) for img in images]
