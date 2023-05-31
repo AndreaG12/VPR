@@ -57,7 +57,7 @@ class LightningModel(pl.LightningModule):
         optimizers = torch.optim.SGD(self.parameters(), lr=0.001, weight_decay=0.001, momentum=0.9)
         return optimizers
 
-      The loss function call (this method will be called at each training iteration)
+     #The loss function call (this method will be called at each training iteration)
     def loss_function(self, descriptors, labels):
        # Include a miner for loss'pair selection
         miner_output = self.miner_fn(descriptors , labels)
