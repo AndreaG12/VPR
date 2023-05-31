@@ -173,6 +173,14 @@ def get_datasets_and_dataloaders(args):
             min_img_per_place=args.min_img_per_place,
             transform = utils.ContrastiveTransformation(customized_transform, n_views = 2)
         )
+        
+    if args.soft_supervised_learning:
+        trin_dataset = TrainDataset(
+            dataset_folder=args.train_path,
+            img_per_place = args.img_per_place,
+            min_img_per_place = args.min_img_per_place, 
+            transform = customized_transform
+        )
     else:
         train_dataset = TrainDataset(
             dataset_folder=args.train_path,
@@ -184,7 +192,7 @@ def get_datasets_and_dataloaders(args):
     
     val_dataset = TestDataset(dataset_folder=args.val_path)
     test_dataset = TestDataset(dataset_folder=args.test_path)
-    if  args.self_supervised_learning:
+    if args.self_supervised_learning || args.soft_supervised_learning:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
     else:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
