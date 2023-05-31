@@ -64,8 +64,9 @@ class TrainDataset(Dataset):
         
         if args.self_supervised_learning:
             
-            image = Image.open(chosen_paths).convert('RGB')  #code line to highlight the self-sup. approach
+            image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
             img = self.transform(image)
+            print(len(image) , image[0].shape, torch.stack((img[0], img[1])))
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
         
         if args.soft_supervised_learning:
