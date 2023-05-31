@@ -42,7 +42,7 @@ class LightningModel(pl.LightningModule):
         # Set loss_function
         # self.loss_fn = losses.MultiSimilarityLoss(alpha=2, beta=50, base=0.0, distance=CosineSimilarity())
         
-        if args.self_supervised_learning | args.soft_supervised_learning:
+        if args.self_supervised_learning = True | args.soft_supervised_learning = True:
             self.loss_fn = losses.VICRegLoss(invariance_lambda=25, 
                 variance_mu=25, 
                 covariance_v=1, 
@@ -73,7 +73,7 @@ class LightningModel(pl.LightningModule):
 
     # This is the training step that's executed at each iteration
     def training_step(self, batch, batch_idx):
-        if args.self_supervised_learning | args.soft_supervised_learning:
+        if args.self_supervised_learning = True | args.soft_supervised_learning = True:
             images, _ = batch
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
@@ -193,7 +193,7 @@ def get_datasets_and_dataloaders(args):
     
     val_dataset = TestDataset(dataset_folder=args.val_path)
     test_dataset = TestDataset(dataset_folder=args.test_path)
-    if args.self_supervised_learning | args.soft_supervised_learning:
+    if args.self_supervised_learning  = True| args.soft_supervised_learning = True:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
     else:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
