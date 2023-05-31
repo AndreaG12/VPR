@@ -89,7 +89,7 @@ class LightningModel(pl.LightningModule):
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
         
-        if  args.self_supervised_learning:
+        if  args.self_supervised_learning or args.soft_supervised_learning:
             descriptorsOrig = descriptors[::2, :]
             ref_descriptors = descriptors[1::2, :]
             
