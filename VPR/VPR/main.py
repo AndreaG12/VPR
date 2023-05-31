@@ -75,13 +75,14 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
+            print(images.shape)
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
         else:
             images, labels = batch
             
-            print(images.shape)
+            
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
