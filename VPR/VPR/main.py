@@ -193,7 +193,7 @@ def get_datasets_and_dataloaders(args):
     
     val_dataset = TestDataset(dataset_folder=args.val_path)
     test_dataset = TestDataset(dataset_folder=args.test_path)
-    if args.self_supervised_learning  = True| args.soft_supervised_learning = True:
+    if args.self_supervised_learning or args.soft_supervised_learning :
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=False)
     else:
         train_loader = DataLoader(dataset=train_dataset, batch_size=args.batch_size, num_workers=args.num_workers, shuffle=True)
