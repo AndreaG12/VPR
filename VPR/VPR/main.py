@@ -60,9 +60,9 @@ class LightningModel(pl.LightningModule):
       The loss function call (this method will be called at each training iteration)
     def loss_function(self, descriptors, labels):
        # Include a miner for loss'pair selection
-         miner_output = self.miner_fn(descriptors , labels)
+        miner_output = self.miner_fn(descriptors , labels)
           #Compute the loss using the loss function and the miner output instead of all possible batch pairs
-         loss = self.loss_fn(descriptors, labels, miner_output)
+        loss = self.loss_fn(descriptors, labels, miner_output)
         loss = self.loss_fn(descriptors, labels)
         return loss
     
@@ -73,7 +73,7 @@ class LightningModel(pl.LightningModule):
 
     # This is the training step that's executed at each iteration
     def training_step(self, batch, batch_idx):
-        if args.self_supervised_learning:
+        if args.self_supervised_learning || args.soft_supervised_learning:
             images, _ = batch
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
