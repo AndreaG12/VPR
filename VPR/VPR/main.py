@@ -178,7 +178,7 @@ def get_datasets_and_dataloaders(args):
             transform = utils.ContrastiveTransformation(customized_transform, n_views = 2)
         )
         
-    if else args.soft_supervised_learning:
+    elif args.soft_supervised_learning:
         train_dataset = TrainDataset(
             dataset_folder=args.train_path,
             img_per_place = args.img_per_place,
