@@ -176,7 +176,7 @@ def get_datasets_and_dataloaders(args):
         )
         
     if args.soft_supervised_learning:
-        trin_dataset = TrainDataset(
+        train_dataset = TrainDataset(
             dataset_folder=args.train_path,
             img_per_place = args.img_per_place,
             min_img_per_place = args.min_img_per_place, 
