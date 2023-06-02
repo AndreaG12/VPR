@@ -171,7 +171,7 @@ def get_datasets_and_dataloaders(args):
                                     contrast = 0.5, 
                                     saturation = 0.5,
                                     hue = 0.1)], p = 0.8) ,
-        tfm.RandomGrayscale(),
+        #tfm.RandomGrayscale(),
         tfm.ToTensor(),
         tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
