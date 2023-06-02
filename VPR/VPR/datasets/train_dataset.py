@@ -73,7 +73,7 @@ class TrainDataset(Dataset):
             
             trasformata = tfm.ToPILImage()
             img1 = trasformata(img[0])
-            print(plt.imshow(img1))
+            plt.imshow(img1)
             plt.show()
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
         
