@@ -7,6 +7,7 @@ from pytorch_metric_learning import losses, miners
 from pytorch_metric_learning.distances import CosineSimilarity, DotProductSimilarity
 from torch.utils.data.dataloader import DataLoader
 from pytorch_lightning.callbacks import ModelCheckpoint
+import matplotlib.pyplot as plt
 
 import utils
 import myparser
@@ -86,6 +87,11 @@ class LightningModel(pl.LightningModule):
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
+        print(type(images[0]))
+        trasformata = tfm.ToPILImage()
+        img1 = trasformata(images[0])
+        plt.imshow(img1)
+        plt.show(block = False)
         
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
