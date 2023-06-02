@@ -70,10 +70,9 @@ class TrainDataset(Dataset):
             image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
             img = self.transform(image)
             
-            #i = tfm.functional.to_pil_image(img[0], mode=None)
-            #j = torchvision.transforms.functional.to_pil_image(img[1], mode=None)
-            #i.show(); #j.show()
-            img1 = np.array(img)
+            print(type(img))
+            trasformata = tfm.ToPILImage()
+            img1 = trasformata(img)
             plt.imshow(img1)
             plt.show()
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
