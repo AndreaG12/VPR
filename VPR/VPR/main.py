@@ -91,7 +91,7 @@ class LightningModel(pl.LightningModule):
         trasformata = tfm.ToPILImage()
         img1 = trasformata(images[0])
         plt.imshow(img1)
-        plt.show(block = False)
+        print(plt.show())
         
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
