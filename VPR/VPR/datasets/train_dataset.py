@@ -67,15 +67,24 @@ class TrainDataset(Dataset):
         
         if args.self_supervised_learning:
             
-            image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
-            img = self.transform(image)
-            
-            
-            trasformata = tfm.ToPILImage()
-            img1 = trasformata(img[0])
+            #image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
+            img = self.transform(images[0])
+            customized_transform = tfm.Compose([
+                tfm.RandomHorizontalFlip(p = 0.5),
+                tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
+                                    contrast = 0.5, 
+                                    saturation = 0.5,
+                                    hue = 0.1)], p = 0.8) ,
+                #tfm.RandomGrayscale(),
+                tfm.ToTensor(),
+                tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            ])
+            augmImg = customized_transform(images[0])
+            #trasformata = tfm.ToPILImage()
+            #img1 = trasformata(img[0])
             #plt.imshow(img1)
             #plt.show(block = False)
-            return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
+            return torch.stack((img, augmImg)), torch.tensor(index).repeat(2)   #number of final augmented images
         
         if args.soft_supervised_learning:
             #images= Image.open((chosen_paths[0], chosen_paths[1])).convert('RGB')
