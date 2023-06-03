@@ -73,8 +73,8 @@ class TrainDataset(Dataset):
             
             trasformata = tfm.ToPILImage()
             img1 = trasformata(img[0])
-            plt.imshow(img1)
-            plt.show(block = False)
+            #plt.imshow(img1)
+            #plt.show(block = False)
             return torch.stack((img[0], img[1])), torch.tensor(index).repeat(2)   #number of final augmented images
         
         if args.soft_supervised_learning:
