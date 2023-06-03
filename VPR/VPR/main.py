@@ -88,10 +88,14 @@ class LightningModel(pl.LightningModule):
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
         #print(type(images[0]))
-        #trasformata = tfm.ToPILImage()
-        #img1 = trasformata(images[0])
-        #plt.imshow(img1)
-        #plt.show(block = False)
+        trasformata = tfm.ToPILImage()
+        img1 = trasformata(images[0])
+        img2 = trasformata(images[0])
+        plt.imshow(img1)
+        plt.show(block = False)
+        plt.imshow(img2)
+        plt.show(block = False)
+        
         
         # Feed forward the batch to the model
         descriptors = self(images)  # Here we are calling the method forward that we defined above
