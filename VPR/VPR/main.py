@@ -77,6 +77,14 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
+            print(images[0].shape)
+            trasformata = tfm.ToPILImage()
+            img1 = trasformata(images[0])
+            img2 = trasformata(images[0])
+            plt.imshow(img1)
+            plt.show(block = False)
+            plt.imshow(img2)
+            plt.show(block = False)
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
@@ -88,14 +96,6 @@ class LightningModel(pl.LightningModule):
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
         #print(type(images[0]))
-        print(images[0])
-        trasformata = tfm.ToPILImage()
-        img1 = trasformata(images[0])
-        img2 = trasformata(images[0])
-        plt.imshow(img1)
-        plt.show(block = False)
-        plt.imshow(img2)
-        plt.show(block = False)
         
         
         # Feed forward the batch to the model
