@@ -79,10 +79,10 @@ class LightningModel(pl.LightningModule):
             images, _ = batch
             print(images[0][0].shape)
             #trasformata = tfm.ToPILImage()
-            img1 = trasformata(images[0][0])
-            img2 = trasformata(images[0][0])
-            plt.imshow(img1)
-            plt.imshow(img2)
+            #img1 = trasformata(images[0][0])
+            #img2 = trasformata(images[0][0])
+            plt.imshow(images[0][0])
+            plt.imshow(images[0][1])
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
