@@ -77,10 +77,10 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
-            print(images[0].shape)
+            print(images[0][0].shape)
             trasformata = tfm.ToPILImage()
-            img1 = trasformata(images[0])
-            img2 = trasformata(images[0])
+            img1 = trasformata(images[0][0])
+            img2 = trasformata(images[0][0])
             plt.imshow(img1)
             plt.show(block = False)
             plt.imshow(img2)
