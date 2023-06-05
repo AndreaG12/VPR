@@ -7,7 +7,7 @@ from pytorch_metric_learning import losses, miners
 from pytorch_metric_learning.distances import CosineSimilarity, DotProductSimilarity
 from torch.utils.data.dataloader import DataLoader
 from pytorch_lightning.callbacks import ModelCheckpoint
-%matplotlibe inline
+%matplotlib inline
 import matplotlib.pyplot as plt
 
 import utils
