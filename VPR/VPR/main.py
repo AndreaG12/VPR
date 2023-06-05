@@ -83,6 +83,7 @@ class LightningModel(pl.LightningModule):
             #img2 = trasformata(images[0][0])
             plt.imshow(images[0][0].cpu().numpy().transpose(1, 2, 0))
             plt.imshow(images[0][1].cpu().numpy().transpose(1,2,0))
+            plt.show()
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
