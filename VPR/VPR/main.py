@@ -8,7 +8,7 @@ from pytorch_metric_learning.distances import CosineSimilarity, DotProductSimila
 from torch.utils.data.dataloader import DataLoader
 from pytorch_lightning.callbacks import ModelCheckpoint
 import matplotlib.pyplot as plt
-
+from PIL import Image
 import utils
 import myparser
 from datasets.test_dataset import TestDataset
@@ -256,7 +256,7 @@ if __name__ == '__main__':
     
     # Train or test only with a pretrained model
     if not args.only_test:
-        trainer.validate(model=model, dataloaders=val_loader)
+      # trainer.validate(model=model, dataloaders=val_loader)
         trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
     trainer.test(model=model, dataloaders=test_loader)
 
