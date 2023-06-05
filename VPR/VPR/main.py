@@ -77,13 +77,13 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
-            print(type(images[0][0]))
+            print(images.shape)
             #trasformata = tfm.ToPILImage()
             #img1 = trasformata(images[0][0])
             #img2 = trasformata(images[0][0])
-            Image.fromarray(images[0][0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('pippo.jpg')
-            plt.imshow(images[0][1].cpu().numpy().transpose(1,2,0).astype(np.uint8))
-            plt.show()
+            Image.fromarray(images[0][0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('0.jpg')
+            Image.fromarray(images[0][1].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('1.jpg')
+            sys.exit()
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
