@@ -176,7 +176,7 @@ def get_datasets_and_dataloaders(args):
     train_transform = tfm.Compose([
        # tfm.RandAugment(num_ops=3),
         tfm.ToTensor(),
-       # tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     customized_transform = tfm.Compose([
         tfm.RandomHorizontalFlip(p = 0.5),
