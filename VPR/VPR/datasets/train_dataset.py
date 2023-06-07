@@ -77,7 +77,7 @@ class TrainDataset(Dataset):
                   #                  hue = 0.1)], p = 0.8) ,
                 #tfm.RandomGrayscale(),
                 tfm.ToTensor(),
-                tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+              #  tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
             augmImg = customized_transform(images[0])
             #trasformata = tfm.ToPILImage()
