@@ -69,6 +69,9 @@ class TrainDataset(Dataset):
             
             #image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
             img = self.transform(images[0])
+            print(img[0], img[0].shape)
+            print(img[1], img[1].shape)
+            print(img[2], img[2].shape)
             imgFinal = torch.stack((img[0], img[1], img[2]))
             
             print(imgFinal.shape)
