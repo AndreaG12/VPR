@@ -80,6 +80,7 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
+            print(images.shape)
             Image.fromarray(images[0][0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('0.jpg')
             Image.fromarray(images[0][1].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('1.jpg')
             sys.exit()
