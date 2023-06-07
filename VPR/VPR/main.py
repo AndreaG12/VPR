@@ -15,6 +15,7 @@ from datasets.test_dataset import TestDataset
 from datasets.train_dataset import TrainDataset
 
 import sys
+from PIL import Image
 
 
 class LightningModel(pl.LightningModule):
