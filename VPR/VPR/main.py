@@ -84,8 +84,8 @@ class LightningModel(pl.LightningModule):
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
            # print(images[0].shape)
-            Image.fromarray(images[0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
-            Image.fromarray(images[1].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('3.jpg')
+            Image.fromarray(images[10].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
+            Image.fromarray(images[11].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('3.jpg')
             sys.exit()
         else:
             images, labels = batch
