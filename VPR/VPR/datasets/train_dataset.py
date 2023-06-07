@@ -69,7 +69,8 @@ class TrainDataset(Dataset):
             
             #image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
             img = self.transform(images[0])
-            Image.fromarray(img[0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
+            print(len(img), img[0].shape)
+            Image.fromarray(img.cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
             #Image.fromarray(images[11].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('3.jpg')
             sys.exit()
             customized_transform = tfm.Compose([
