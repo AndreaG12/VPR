@@ -178,7 +178,7 @@ def get_datasets_and_dataloaders(args):
     ])
     customized_transform = tfm.Compose([
         tfm.RandomHorizontalFlip(p = 0.5),
-        tfm.RandomCrop((150, 150)),
+       # tfm.RandomCrop((150, 150)),
       #  tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
        #                             contrast = 0.5, 
         #                            saturation = 0.5,
