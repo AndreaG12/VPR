@@ -14,6 +14,8 @@ import myparser
 from datasets.test_dataset import TestDataset
 from datasets.train_dataset import TrainDataset
 
+import sys
+
 
 class LightningModel(pl.LightningModule):
     def __init__(self, val_dataset, test_dataset, avgpool, avgpool_param = {}, 
