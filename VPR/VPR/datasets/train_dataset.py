@@ -71,11 +71,11 @@ class TrainDataset(Dataset):
             img = self.transform(images[0])
             customized_transform = tfm.Compose([
                 tfm.RandomHorizontalFlip(p = 1),
-                tfm.RandomApply([tfm.ColorJitter(brightness = 0.6,  
-                                    contrast = 0.4, 
-                                    saturation = 0.3,
-                                    hue = 0.1)], p = 0.8) ,
-                #tfm.RandomGrayscale(),
+               # tfm.RandomApply([tfm.ColorJitter(brightness = 0.6,  
+                #                    contrast = 0.4, 
+                 #                   saturation = 0.3,
+                  #                  hue = 0.1)], p = 0.8) ,
+                tfm.RandomGrayscale(),
                 tfm.ToTensor(),
                 tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
