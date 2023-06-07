@@ -14,6 +14,8 @@ import myparser
 from datasets.test_dataset import TestDataset
 from datasets.train_dataset import TrainDataset
 
+import sys
+
 
 class LightningModel(pl.LightningModule):
     def __init__(self, val_dataset, test_dataset, avgpool, avgpool_param = {}, 
@@ -77,6 +79,9 @@ class LightningModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         if args.self_supervised_learning  or args.soft_supervised_learning:
             images, _ = batch
+            Image.fromarray(images[0][0].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('0.jpg')
+            Image.fromarray(images[0][1].cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('1.jpg')
+            sys.exit()
             num_places, num_images_per_place, C, H, W = images.shape
             images = images.view(num_places * num_images_per_place, C, H, W)
             
@@ -88,13 +93,13 @@ class LightningModel(pl.LightningModule):
             images = images.view(num_places * num_images_per_place, C, H, W)
             labels = labels.view(num_places * num_images_per_place)
         #print(type(images[0]))
-        trasformata = tfm.ToPILImage()
-        img1 = trasformata(images[0])
-        img2 = trasformata(images[0])
-        plt.imshow(img1)
-        plt.show(block = False)
-        plt.imshow(img2)
-        plt.show(block = False)
+        #trasformata = tfm.ToPILImage()
+        #img1 = trasformata(images[0])
+        #img2 = trasformata(images[0])
+        #plt.imshow(img1)
+        #plt.show(block = False)
+        #plt.imshow(img2)
+        #plt.show(block = False)
         
         
         # Feed forward the batch to the model
