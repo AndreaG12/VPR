@@ -74,7 +74,7 @@ class TrainDataset(Dataset):
            
             customized_transform = tfm.Compose([
                 tfm.RandomHorizontalFlip(p = 0.5),
-                tfm.RandomCrop((150, 150))
+                tfm.RandomCrop((150, 150)),
       #  tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
        #                             contrast = 0.5, 
         #                            saturation = 0.5,
@@ -83,7 +83,10 @@ class TrainDataset(Dataset):
                 tfm.ToTensor(),
                 tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
+            print(images[0].shape)
             augmImg = customized_transform(images[0])
+            
+            Image.fromarray(augmImg.cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
             #trasformata = tfm.ToPILImage()
             #img1 = trasformata(img[0])
             #plt.imshow(img1)
