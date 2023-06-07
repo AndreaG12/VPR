@@ -172,17 +172,18 @@ class LightningModel(pl.LightningModule):
 
 def get_datasets_and_dataloaders(args):
     train_transform = tfm.Compose([
-       # tfm.RandAugment(num_ops=3),
+        tfm.RandAugment(num_ops=3),
         tfm.ToTensor(),
         tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     customized_transform = tfm.Compose([
         tfm.RandomHorizontalFlip(p = 0.5),
+        tfm.RandomCrop((150, 150))
       #  tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
        #                             contrast = 0.5, 
         #                            saturation = 0.5,
          #                           hue = 0.1)], p = 0.8) ,
-        #tfm.RandomGrayscale(),
+        tfm.RandomGrayscale(),
         tfm.ToTensor(),
         tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
