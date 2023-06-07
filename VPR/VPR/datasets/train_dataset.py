@@ -13,7 +13,7 @@ import myparser
 
 default_transform = tfm.Compose([
     tfm.ToTensor(),
-    #tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
 
