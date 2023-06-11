@@ -47,9 +47,9 @@ class LightningModel(pl.LightningModule):
         # self.loss_fn = losses.MultiSimilarityLoss(alpha=2, beta=50, base=0.0, distance=CosineSimilarity())
         
         if args.self_supervised_learning or args.soft_supervised_learning:
-            self.loss_fn = losses.VICRegLoss(invariance_lambda=1, 
-                variance_mu=1, 
-                covariance_v=1, 
+            self.loss_fn = losses.VICRegLoss(invariance_lambda=10, 
+                variance_mu=10, 
+                covariance_v=10, 
                 eps=1e-4)
         else:
             self.loss_fn = losses.ContrastiveLoss(pos_margin=0, neg_margin=1)
