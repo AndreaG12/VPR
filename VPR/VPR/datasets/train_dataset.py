@@ -89,7 +89,7 @@ class TrainDataset(Dataset):
                     tfm.RandomHorizontalFlip(p = 1),
                 #   tfm.RandomCrop((150, 150)),
                   #  tfm.ColorJitter(brightness = (0.1,0.9)) ,
-                    tfm.RandomGrayscale(),
+                  #  tfm.RandomGrayscale(),
                     
                    # tfm.RandomApply(transforms=[
                                                 #tfm.RandomAffine(30, translate=(0.2,0.2), scale=None, shear=None, interpolation=tfm.InterpolationMode.NEAREST, fill=0, center=None),
