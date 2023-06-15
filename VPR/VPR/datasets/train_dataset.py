@@ -119,7 +119,7 @@ class TrainDataset(Dataset):
              #   tfm.RandomGrayscale(),
               #  tfm.ToTensor(),
                # tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            ])
+           # ])
             #print(images[0].shape)
             augmImg = customized_transform2(images[0])
             
