@@ -59,7 +59,7 @@ class TrainDataset(Dataset):
         images = [Image.open(path).convert('RGB') for path in chosen_paths]
 
         customized_transform2 = tfm.Compose([
-                    tfm.RandomHorizontalFlip(p = 1),
+                   # tfm.RandomHorizontalFlip(p = 1),
                   #  tfm.ColorJitter(brightness = (0.1,0.9)) ,
                   #  tfm.RandomGrayscale(),
                     
@@ -69,6 +69,7 @@ class TrainDataset(Dataset):
                     #tfm.RandomPerspective(p=0.5),
                                                # tfm.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5)),
                     tfm.RandomPerspective(p=0.5),
+                    tfm.RandomHorizontalFlip(p = 1),
                     tfm.RandomCrop(size=224),
                     #tfm.RandomPerspective(p=0.5),
                     #                            ],
