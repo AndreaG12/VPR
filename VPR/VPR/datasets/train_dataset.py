@@ -17,29 +17,6 @@ default_transform = tfm.Compose([
     tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
-#class GaussianBlur(object):
- #   def __init__(self, p):
-  #      self.p = p
-
-   # def __call__(self, img):
-    #    if np.random.rand() < self.p:
-     #       sigma = np.random.rand() * 1.9 + 0.1
-      #      return img.filter(ImageFilter.GaussianBlur(sigma))
-       # else:
-        #    return img
-
-
-#class Solarization(object):
- #   def __init__(self, p):
-  #      self.p = p
-
-   # def __call__(self, img):
-    #    if np.random.rand() < self.p:
-     #       return ImageOps.solarize(img)
-      #  else:
-       #     return img
-
-
 class TrainDataset(Dataset):
     def __init__(
         self,
@@ -75,19 +52,14 @@ class TrainDataset(Dataset):
 
     def __getitem__(self, index):
         
-        args = myparser.parse_arguments()
-         
+        args = myparser.parse_arguments() 
         place_id = self.places_ids[index]
-        
         all_paths_from_place_id = self.dict_place_paths[place_id]
-        
         chosen_paths = np.random.choice(all_paths_from_place_id, self.img_per_place)
-        
         images = [Image.open(path).convert('RGB') for path in chosen_paths]
 
         customized_transform2 = tfm.Compose([
                     tfm.RandomHorizontalFlip(p = 1),
-                #   tfm.RandomCrop((150, 150)),
                   #  tfm.ColorJitter(brightness = (0.1,0.9)) ,
                   #  tfm.RandomGrayscale(),
                     
@@ -97,6 +69,7 @@ class TrainDataset(Dataset):
                     #tfm.RandomPerspective(p=0.5),
                                                # tfm.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5)),
                     tfm.RandomCrop(size=224),
+                    tfm.RandomPerspective(p=0.5),
                     #                            ],
                      #               p=1),
                     tfm.ToTensor(),
