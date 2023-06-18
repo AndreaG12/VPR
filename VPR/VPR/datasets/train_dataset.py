@@ -106,34 +106,17 @@ class TrainDataset(Dataset):
             
             #image = Image.open(chosen_paths[0]).convert('RGB')  #code line to highlight the self-sup. approach
             img = self.transform(images[0])
-            
-            
-           
-           # customized_transform = tfm.Compose([
-            #    tfm.RandomHorizontalFlip(p = 0.5),
-             #   tfm.RandomCrop((150, 150)),
-      #  tfm.RandomApply([tfm.ColorJitter(brightness = 0.5,  
-       #                             contrast = 0.5, 
-        #                            saturation = 0.5,
-         #                           hue = 0.1)], p = 0.8) ,
-             #   tfm.RandomGrayscale(),
-              #  tfm.ToTensor(),
-               # tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-           # ])
-            #print(images[0].shape)
+         
             augmImg = customized_transform2(images[0])
             
-           # Image.fromarray(augmImg.cpu().numpy().transpose(1,2,0).astype(np.uint8)).save('2.jpg')
-            #trasformata = tfm.ToPILImage()
-            #img1 = trasformata(img[0])
-            #plt.imshow(img1)
-            #plt.show(block = False)
             return torch.stack((img, augmImg)), torch.tensor(index).repeat(2)   #number of final augmented images
         
         if args.soft_supervised_learning:
             #images= Image.open((chosen_paths[0], chosen_paths[1])).convert('RGB')
-            image = [self.transform(img) for img in images]
-            return torch.stack(image), torch.tensor(index).repeat(2)
+            image1 = self.transform(images[0])
+            image2 = customized_transform2(images[1])
+            #image = [self.transform((image1, image2)) for img in images]
+            return torch.stack((image1, image2)), torch.tensor(index).repeat(2)
         else:
             images = [Image.open(path).convert('RGB') for path in chosen_paths]
             images = [self.transform(img) for img in images]
