@@ -65,9 +65,9 @@ class LightningModel(pl.LightningModule):
      #The loss function call (this method will be called at each training iteration)
     def loss_function(self, descriptors, labels):
        # Include a miner for loss'pair selection
-        miner_output = self.miner_fn(descriptors , labels)
+       # miner_output = self.miner_fn(descriptors , labels)
           #Compute the loss using the loss function and the miner output instead of all possible batch pairs
-        loss = self.loss_fn(descriptors, labels, miner_output)
+        #loss = self.loss_fn(descriptors, labels, miner_output)
         loss = self.loss_fn(descriptors, labels)
         return loss
     
