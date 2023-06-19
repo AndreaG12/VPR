@@ -73,7 +73,7 @@ class TrainDataset(Dataset):
                     tfm.RandomHorizontalFlip(p = 1),
                     tfm.RandomPerspective(p=0.5),
                     #tfm.RandomHorizontalFlip(p = 1),
-                    tfm.RandomCrop(size=224),
+                    #tfm.RandomCrop(size=224),
                     #tfm.RandomPerspective(p=0.5),
                     #                            ],
                      #               p=1),
