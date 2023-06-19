@@ -66,9 +66,9 @@ class TrainDataset(Dataset):
                    # tfm.RandomApply(transforms=[
                                                 #tfm.RandomAffine(30, translate=(0.2,0.2), scale=None, shear=None, interpolation=tfm.InterpolationMode.NEAREST, fill=0, center=None),
                          #                       tfm.RandomEqualize(p=0.6),
-                    tfm.RandomPerspective(p=0.5),
+                  #  tfm.RandomPerspective(p=0.5),
                                                # tfm.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5)),
-                    tfm.RandomPerspective(p=0.5),
+                   # tfm.RandomPerspective(p=0.5),
                     #tfm.RandomCrop(size=224),
                     #tfm.RandomHorizontalFlip(p = 1),
                     tfm.RandomPerspective(p=0.5),
