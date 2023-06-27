@@ -18,6 +18,8 @@ def parse_arguments():
                         help="whether to load pytorch lightning checkpoints")
     parser.add_argument("--only_test", default=False,
                         help="avoid the train phase and test on --test_path")
+    parser.add_argument("--self_supervised", default=False,
+                        help="self_supervised enable")
     
     # Architecture parameters
     parser.add_argument("--descriptors_dim", type=int, default=512,
@@ -26,6 +28,10 @@ def parse_arguments():
                         help="whether to adopt Global Proxy Mining module")
     parser.add_argument("--pooling_layer", type = str, default=None,
                         help="change the last pooling layer")
+    parser.add_argument("--optimizer", type = str, default="sgd",
+                        help="change the optimizer")
+    parser.add_argument("--lr_scheduler", type = str, default="",
+                        help="change the learning rate scheduler")
     
     # Visualizations parameters
     parser.add_argument("--num_preds_to_save", type=int, default=0,
@@ -45,13 +51,5 @@ def parse_arguments():
     parser.add_argument("--checkpoint_path", type=str, default="./LOGS/lightning_logs/version_0/checkpoints/*.ckpt",
                         help="path for loading pytorch lightning checkpoints")
 
-    parser.add_argument("--self_supervised_learning", default = False, 
-                        help = "apply a customized augmentation to an image in order to obtain two augmentated ones ")
-    
-    parser.add_argument("--soft_supervised_learning", default = False, 
-                        help = "apply a customized augmentation to images paired in order of the label")
-
-
     args = parser.parse_args()
     return args
-
