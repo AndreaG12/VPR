@@ -72,8 +72,8 @@ class TrainDataset(Dataset):
         self.transformer_aug = tfm.Compose([
                     # tfm.RandomHorizontalFlip(p = 0.7),
                 #   tfm.RandomCrop((150, 150)),
-                    #tfm.ColorJitter(brightness = (0.1,0.9)) ,
-                    #tfm.RandomGrayscale(),
+                    tfm.ColorJitter(brightness = (0.1,0.9)) ,
+                    tfm.RandomGrayscale(),
                     
                     # tfm.RandomApply(transforms=[
                     #                             #tfm.RandomAffine(30, translate=(0.2,0.2), scale=None, shear=None, interpolation=tfm.InterpolationMode.NEAREST, fill=0, center=None),
@@ -90,8 +90,8 @@ class TrainDataset(Dataset):
                     #     tfm.RandomCrop(size=224),
                     # ], p=0.5),
                     tfm.RandomHorizontalFlip(p = 1),
-                    tfm.RandomPerspective(p=0.5),
-                    tfm.RandomCrop(size=224),
+                    #tfm.RandomPerspective(p=0.5),
+                    #tfm.RandomCrop(size=224),
                     tfm.ToTensor(),
                     tfm.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
                 ])
