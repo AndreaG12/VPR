@@ -189,6 +189,7 @@ def compute_recalls(eval_ds: Dataset, queries_descriptors : np.ndarray, database
     # Save visualizations of predictions
     if num_preds_to_save != 0:
         # For each query save num_preds_to_save predictions
+        output_folder = './visualizations'
         visualizations.save_preds(predictions[:, :num_preds_to_save], eval_ds, output_folder, save_only_wrong_preds)
     
     return recalls, recalls_str
