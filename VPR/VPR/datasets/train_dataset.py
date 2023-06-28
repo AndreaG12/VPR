@@ -118,7 +118,7 @@ class TrainDataset(Dataset):
             image = images[0]
             images_aug = images[1:]
             image = self.transform(image)
-            images_aug = [self.transform(img) for img in images_aug]
+            images_aug = [self.transformer_aug(img) for img in images_aug]
             #image = [image for _ in range(3)]
 
             #return torch.stack(tfm_images), torch.stack(images_aug), torch.tensor(index).repeat(self.img_per_place)
